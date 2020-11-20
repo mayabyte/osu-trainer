@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using NAudio.Wave;
-using NAudio.Lame; 
+using NAudio.Lame;
 
 namespace osu_trainer
 {
@@ -20,9 +20,14 @@ namespace osu_trainer
             File.Copy(inFile, temp1);
 
             // mp3 => wav
-            using (Mp3FileReader mp3 = new Mp3FileReader(temp1))
-            using (WaveStream wav = WaveFormatConversionStream.CreatePcmStream(mp3))
-                WaveFileWriter.CreateWaveFile(temp2, wav);
+            Process ffmpeg = new Process();
+            ffmpeg.StartInfo.FileName = Path.Combine("binaries", "ffmpeg.exe");
+            ffmpeg.StartInfo.Arguments = $"-i {temp1} -acodec pcm_s16le {temp2}";
+            Console.WriteLine(ffmpeg.StartInfo.Arguments);
+            ffmpeg.StartInfo.UseShellExecute = false;
+            ffmpeg.StartInfo.CreateNoWindow = true;
+            ffmpeg.Start();
+            ffmpeg.WaitForExit();
 
 
             // stretch (or speed up) wav
