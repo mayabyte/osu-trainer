@@ -226,6 +226,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="binaries\ffmpeg.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="binaries\oppai.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
